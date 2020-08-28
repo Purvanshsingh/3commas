@@ -1,6 +1,6 @@
 import MongoConnection
 import pandas as pd
-
+from datetime import datetime
 
 class Bot_table:
     def __init__(self):
@@ -10,16 +10,16 @@ class Bot_table:
 
     def generate_bot_table(self):
         print("Generating Bot table Please wait....")
-        output = pd.DataFrame(columns=['Bot_name', 'Id', "Current_pairs"])
+        output = pd.DataFrame(columns=['Bot_name', 'Bot_id', "Current_pairs"])
         for document in self.bot_table_data:
             row = pd.Series([document['name'], document['id'], document['pairs']],
-                            index=['Bot_name', 'Id', "Current_pairs"])
+                            index=['Bot_name', 'Bot_id', "Current_pairs"])
             output = output.append(row, ignore_index=True)
         print(output.head())
         print("Done")
         print("*" * 40)
         print("Exporting File...")
-        output.to_csv("Update_table.csv",index=False)
+        output.to_csv("Update_table" + datetime.now().strftime("%d_%m_%Y_%H_%M_%S") + ".csv", index=False)
         print("Done")
 
 
