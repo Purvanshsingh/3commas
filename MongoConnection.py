@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-
+from pprint import pprint
 
 class App_mongo_connect:
     def __init__(self):
@@ -8,11 +8,11 @@ class App_mongo_connect:
         self.db = self.client.ccMain
 
     def get_update_table(self):
-        threecommasbots_db= self.db.threeCommasBots.find({"is_enabled": True})
+        threecommasbots_db= self.db.threeCommasBots.find({"name":"AUTO TEST 1"})
         if (threecommasbots_db == None):
             print("FAILED: Loading data report from ")
         else:
             print("Data Loaded Successfully.")
-            return list(threecommasbots_db)
+            return list(threecommasbots_db)[0]
     def __del__(self):
         self.client.close()

@@ -9,13 +9,14 @@ class Bot_table:
         print("*" * 40)
 
     def generate_bot_table(self):
+
         print("Generating Bot table Please wait....")
+        document = self.bot_table_data
+        row = pd.Series([document['name'], document['id'], ",".join(document['pairs'])],
+                        index=['Bot_name', 'Bot_id', "Current_pairs"])
         output = pd.DataFrame(columns=['Bot_name', 'Bot_id', "Current_pairs"])
-        for document in self.bot_table_data:
-            row = pd.Series([document['name'], document['id'], ",".join(document['pairs'])],
-                            index=['Bot_name', 'Bot_id', "Current_pairs"])
-            output = output.append(row, ignore_index=True)
-        print(output.head())
+        output = output.append(row,ignore_index=True)
+        print(output)
         print("Done")
         print("*" * 40)
         print("Exporting File...")
