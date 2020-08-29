@@ -12,7 +12,7 @@ class Bot_table:
         print("Generating Bot table Please wait....")
         output = pd.DataFrame(columns=['Bot_name', 'Bot_id', "Current_pairs"])
         for document in self.bot_table_data:
-            row = pd.Series([document['name'], document['id'], document['pairs']],
+            row = pd.Series([document['name'], document['id'], ",".join(document['pairs'])],
                             index=['Bot_name', 'Bot_id', "Current_pairs"])
             output = output.append(row, ignore_index=True)
         print(output.head())
