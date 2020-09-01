@@ -1,11 +1,14 @@
 import MongoConnection
 import pandas as pd
+import os
 from datetime import datetime
 
 class Bot_table:
     def __init__(self):
         db_object = MongoConnection.App_mongo_connect()
         self.bot_table_data = db_object.get_update_table()
+        self.abs_path = os.path.dirname(os.path.abspath(__file__))
+        self.bot_table_path = os.path.join(self.abs_path,"Bot_tables")
         print("*" * 40)
 
     def generate_bot_table(self):
@@ -19,7 +22,8 @@ class Bot_table:
         print("Done")
         print("*" * 40)
         print("Exporting File...")
-        output.to_csv("Update_table" + datetime.now().strftime("%d_%m_%Y_%H_%M_%S") + ".csv", index=False)
+        file_name = "Update_table" + datetime.now().strftime("%d_%m_%Y_%H_%M_%S") + ".csv"
+        output.to_csv(os.path.join(self.bot_table_path,file_name), index=False)
         print("Done")
 
 
