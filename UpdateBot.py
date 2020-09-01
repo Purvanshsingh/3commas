@@ -54,16 +54,17 @@ class UpdateBot:
         for bot in self.bot_information_from_db:
             print(bot)
             # converting values to string
-            for key,value in list(bot.items()):
-                print(value)
+            del bot['leverage_custom_value']
+            del bot['bots_status']
+            #del bot['finished_deals_profit_local']
+            #for key,value in list(bot.items()):
             error, data = self.py3cw.request(
                 entity='bots',
                 action='update',
                 action_id= str(bot['id']),
                 payload=bot
             )
-            if error:
-                print(error)
+            print(error)
 
 
 
