@@ -55,8 +55,7 @@ class UpdateBot:
             print(bot)
             # converting values to string
             for key,value in list(bot.items()):
-                if isinstance(value,int):
-                    bot[key] = str(value)
+                print(key)
             error, data = self.py3cw.request(
                 entity='bots',
                 action='update',

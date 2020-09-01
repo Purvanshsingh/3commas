@@ -12,7 +12,8 @@ error, data_from_bot = p3cw.request(
 # Checking if no error
 if not error:
     print(data_from_bot)
-# Udating Some values into the bot
+# Udating Some value
+#              'active_safety_orders_count': '2',s into the bot
 """error, data = p3cw.request(
     entity='bots',
     action='update',
@@ -25,7 +26,6 @@ if not error:
              'martingale_volume_coefficient': '2',
              'martingale_step_coefficient': '2',
              'max_safety_orders': '2',
-             'active_safety_orders_count': '2',
              'safety_order_step_percentage': '2',
              'take_profit_type': 'total',
              'stop_loss_percentage' : 10,
