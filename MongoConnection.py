@@ -22,7 +22,7 @@ class App_mongo_connect:
         for bot in bot_with_new_pairs:
             id.append(bot['id'])
         print(id)
-        active_bot_data = self.db.threeCommasBots.find({"is_enabled": False})
+        active_bot_data = self.db.threeCommasBots.find({"is_enabled": False},{'_id': False})
         active_bot_data = list(active_bot_data)
         for bot in active_bot_data:
             if bot['id'] in id:

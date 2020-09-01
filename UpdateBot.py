@@ -6,6 +6,7 @@ import pandas as pd
 import MongoConnection
 import json
 
+
 class UpdateBot:
     def __init__(self):
         self.db_object = MongoConnection.App_mongo_connect()
@@ -41,6 +42,7 @@ class UpdateBot:
         return self.bot_with_new_pairs
 
     def update_bot(self):
+
         self.bot_information_from_db = self.db_object.get_bot_data(self.bot_with_new_pairs)
         print(self.bot_information_from_db)
         for bot_db in self.bot_information_from_db:
@@ -48,19 +50,21 @@ class UpdateBot:
                 if bot_db['id'] == bot_new_pairs['id']:
                     bot_db['pairs'] = bot_new_pairs['new_pairs'].split(",")
         print(self.bot_information_from_db)
-
+        global error
         for bot in self.bot_information_from_db:
             print(bot)
+            # converting values to string
+            for key,value in list(bot.items()):
+                if isinstance(value,int):
+                    bot[key] = str(value)
             error, data = self.py3cw.request(
                 entity='bots',
                 action='update',
                 action_id= str(bot['id']),
                 payload=bot
             )
-        if not error:
-            print("Bot Updated Successfully")
-        else:
-            print(error)
+            if error:
+                print(error)
 
 
 
