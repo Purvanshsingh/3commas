@@ -6,14 +6,14 @@ p3cw = Py3CW(key='3e45e0cb611845a19bc053f4752090704b20f1085c2d4951b4606b99d11db9
 # Data from the bot
 
 error, data_from_bot = p3cw.request(
-    entity='bots',
+    entity='show',
     action=''
 )
 # Checking if no error
 if not error:
     print(data_from_bot)
 # Udating Some values into the bot
-error, data = p3cw.request(
+"""error, data = p3cw.request(
     entity='bots',
     action='update',
     action_id='1390329',
@@ -34,5 +34,5 @@ error, data = p3cw.request(
                                 'strategy': 'trading_view'}, {'options': {'time': '1h', 'points': '39'},
                                                               'strategy': 'rsi'}]
              }
-)
+)"""
 print(data)

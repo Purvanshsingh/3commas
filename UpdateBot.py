@@ -4,7 +4,7 @@ import os
 import numpy as np
 import pandas as pd
 import MongoConnection
-
+import json
 
 class UpdateBot:
     def __init__(self):
@@ -43,6 +43,26 @@ class UpdateBot:
     def update_bot(self):
         self.bot_information_from_db = self.db_object.get_bot_data(self.bot_with_new_pairs)
         print(self.bot_information_from_db)
+        for bot_db in self.bot_information_from_db:
+            for bot_new_pairs in self.bot_with_new_pairs:
+                if bot_db['id'] == bot_new_pairs['id']:
+                    bot_db['pairs'] = bot_new_pairs['new_pairs'].split(",")
+        print(self.bot_information_from_db)
+
+        for bot in self.bot_information_from_db:
+            print(bot)
+            error, data = self.py3cw.request(
+                entity='bots',
+                action='update',
+                action_id= str(bot['id']),
+                payload=bot
+            )
+        if not error:
+            print("Bot Updated Successfully")
+        else:
+            print(error)
+
+
 
 
 Bot_obj = UpdateBot()
