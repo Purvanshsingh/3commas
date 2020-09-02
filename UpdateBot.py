@@ -76,6 +76,7 @@ class UpdateBot:
             for bot in self.bots_information_from_db:
                 del bot['leverage_custom_value']
                 del bot['bots_status']
+                del bot['max_active_deals']
                 #del bot['finished_deals_profit_local']
                 # Updating DB
 
@@ -90,7 +91,7 @@ class UpdateBot:
                 if error:
                     print(error)
                 else:
-                    print("Bot Updated Successfully.")
+                    print(str(bot['name']) + "Bot Updated Successfully.")
         else:
             print("Terminated!")
             exit()

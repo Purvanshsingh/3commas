@@ -9,7 +9,7 @@ class App_mongo_connect:
         self.db = self.client.ccMain
 
     def get_update_table(self):
-        threecommasbots_db= self.db.threeCommasBots.find({"is_enabled": True})
+        threecommasbots_db= self.db.threeCommasBots.find({"is_enabled": False})
         if (threecommasbots_db == None):
             print("FAILED: Loading data report from ")
         else:
