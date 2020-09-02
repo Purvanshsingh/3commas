@@ -18,6 +18,7 @@ class Bot_table:
             row = pd.Series([document['name'], document['id'], ",".join(document['pairs'])],
                             index=['Bot_name', 'Bot_id', "Current_pairs"])
             output = output.append(row, ignore_index=True)
+        output['New_pairs'] = None
         print(output.head())
         print("Done")
         print("*" * 40)
