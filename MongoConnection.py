@@ -15,20 +15,15 @@ class App_mongo_connect:
         else:
             print("Data Loaded Successfully.")
             return list(threecommasbots_db)
-    def get_bot_data(self,bot_with_new_pairs):
-        print(bot_with_new_pairs)
-        bot_data = []
-        id = []
-        for bot in bot_with_new_pairs:
-            id.append(bot['id'])
-        print(id)
-        active_bot_data = self.db.threeCommasBots.find({"is_enabled": False},{'_id': False})
-        active_bot_data = list(active_bot_data)
-        for bot in active_bot_data:
-            if bot['id'] in id:
-                bot_data.append(bot)
+    def get_bot_data(self,bot_ids_with_new_pairs):
+        active_bot_to_update = []
+        active_bots = self.db.threeCommasBots.find({"is_enabled": False},{'_id': False})
+        active_bots = list(active_bots)
+        for bot in active_bots:
+            if bot['id'] in bot_ids_with_new_pairs:
+                active_bot_to_update.append(bot)
 
-        return bot_data
+        return active_bot_to_update
 
 
     def __del__(self):
