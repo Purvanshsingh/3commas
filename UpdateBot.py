@@ -73,11 +73,19 @@ class UpdateBot:
         print("*"*40)
         conform = input("Are you sure to update above mentioned bots? (y/n)")
         if conform == 'y' or conform == "Y":
+            mandatory_arguments = ["name", "pairs", "base_order_volume", "take_profit", "safety_order_volume",
+                                   "take_profit", "martingale_volume_coefficient", "martingale_step_coefficient",
+                                   "max_safety_orders", "active_safety_orders_count", "safety_order_step_percentage",
+                                   "take_profit_type", "strategy_list", "id","stop_loss_percentage", "cooldown"]
             for bot in self.bots_information_from_db:
-                del bot['leverage_custom_value']
-                del bot['bots_status']
-                del bot['max_active_deals']
-                #del bot['finished_deals_profit_local']
+                # only passing mandatory parameter.
+                for key in list(bot.keys()):
+                    if key not in mandatory_arguments:
+                        del bot[key]
+                # If any argument from mandatory_arguments is None then dropping them.
+                for key in mandatory_arguments:
+                    if bot[key] is None:
+                        del bot[key]
                 # Updating DB
 
 
@@ -85,13 +93,13 @@ class UpdateBot:
                 error, data = self.py3cw.request(
                     entity='bots',
                     action='update',
-                    action_id= str(bot['id']),
+                    action_id= str(bot["id"]),
                     payload=bot
                 )
                 if error:
                     print(error)
                 else:
-                    print(str(bot['name']) + "Bot Updated Successfully.")
+                    print(str(bot['name']) + " Bot Updated Successfully.")
         else:
             print("Terminated!")
             exit()
