@@ -20,6 +20,8 @@ class UpdateBot:
         parser = argparse.ArgumentParser()
         parser.add_argument('--input_file', type=str,
                             default='', help='Default - ""')
+        parser.add_argument('--force', type=bool,
+                            default=False, help='Default - False')
         args = vars(parser.parse_args())
 
         print("Input arguments:")
@@ -27,6 +29,7 @@ class UpdateBot:
         print("*"*40)
 
         self.input_file = args['input_file']
+        self.force = args['force']
         self.abs_path = os.path.dirname(os.path.abspath(__file__))
         self.bot_table_path = os.path.join(self.abs_path, "Bot_tables")
         self.file = os.path.join(self.bot_table_path,self.input_file)
@@ -71,7 +74,11 @@ class UpdateBot:
         print("Bots to be updated are:")
         print(bots_to_be_updated)
         print("*"*40)
-        conform = input("Are you sure to update above mentioned bots? (y/n)")
+        if self.force == False:
+            conform = input("Are you sure to update above mentioned bots? (y/n)")
+        else:
+            print("forcefully updating bots...")
+            conform = 'y'
         if conform == 'y' or conform == "Y":
             mandatory_arguments = ["name", "pairs", "base_order_volume", "take_profit", "safety_order_volume",
                                    "take_profit", "martingale_volume_coefficient", "martingale_step_coefficient",
