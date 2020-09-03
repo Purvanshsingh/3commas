@@ -93,20 +93,24 @@ class UpdateBot:
                 for key in mandatory_arguments:
                     if bot[key] is None:
                         del bot[key]
-                # Updating DB
-
-
-
+                # Updating DataBase
+                update = requests.post("http://142.93.42.209:5001/3commas/bots/"+str(bot["id"]),
+                                       {"pairs":bot['pairs']})
+                # Updating bot
                 error, data = self.py3cw.request(
                     entity='bots',
                     action='update',
                     action_id= str(bot["id"]),
                     payload=bot
                 )
+                # Checking for errors in Updating Bot
                 if error:
                     print(error)
-                else:
-                    print(str(bot['name']) + " Bot Updated Successfully.")
+                # Checking for errors in Updating DataBase
+                if update.status_code != requests.codes.ok:
+                    print(update.text)
+                if error is None and update.status_code is requests.codes.ok :
+                    print(str(bot['name']) + " Bot and DataBase Updated Successfully.")
         else:
             print("Terminated!")
             exit()
