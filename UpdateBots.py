@@ -83,8 +83,11 @@ class UpdateBots:
             mandatory_arguments = ["name", "pairs", "base_order_volume", "take_profit", "safety_order_volume",
                                    "take_profit", "martingale_volume_coefficient", "martingale_step_coefficient",
                                    "max_safety_orders", "active_safety_orders_count", "safety_order_step_percentage",
-                                   "take_profit_type", "strategy_list", "id","stop_loss_percentage", "cooldown"]
+                                   "take_profit_type", "strategy_list", "id","stop_loss_percentage", "cooldown",
+                                   "max_active_deals"]
             for bot in self.bots_information_from_db:
+                # setting max_active_deals
+                bot["max_active_deals"] = len(bot["pairs"])
                 # only passing mandatory parameter.
                 for key in list(bot.keys()):
                     if key not in mandatory_arguments:
