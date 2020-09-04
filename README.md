@@ -16,7 +16,7 @@ Python 3.X
 ```
 Should be installed in your system.
 
-## dependencies
+## Dependencies
 
 All the dependencies are present in requirements.txt,
 install them by running below mention command in terminal.
