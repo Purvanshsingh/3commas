@@ -1,2 +1,4 @@
 __pycache__/MongoConnection.cpython-37.pyc
 .vscode/
+Bot_tables/
+*.csv
