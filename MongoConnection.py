@@ -11,13 +11,13 @@ class App_mongo_connect:
     def get_update_table(self):
         threecommasbots_db= self.db.threeCommasBots.find({"is_enabled": False})
         if (threecommasbots_db == None):
-            print("FAILED: Loading data report from ")
+            print("FAILED: loading data report from ")
         else:
-            print("Data Loaded Successfully.")
+            print("Data loaded successfully.")
             return list(threecommasbots_db)
     def get_bot_data(self,bot_ids_with_new_pairs):
         active_bot_to_update = []
-        active_bots = self.db.threeCommasBots.find({"is_enabled": False},{'_id': False})
+        active_bots = self.db.threeCommasBots.find({"is_enabled": False}, {'_id': False})
         active_bots = list(active_bots)
         for bot in active_bots:
             if bot['id'] in bot_ids_with_new_pairs:
