@@ -12,7 +12,7 @@ class Bots_table:
         print("*" * 40)
 
     def generate_bots_table(self):
-        print("Generating bot table please wait....")
+        print("Generating bots table please wait...")
         output = pd.DataFrame(columns=['Bot_name', 'Bot_id', "Current_pairs"])
         for document in self.bots_table_data:
             row = pd.Series([document['name'], document['id'], ",".join(document['pairs'])],

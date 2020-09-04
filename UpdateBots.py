@@ -36,7 +36,7 @@ class UpdateBots:
 
     def bots_information(self):
         """
-            this methods return the bots to be updated with new pairs.
+            This methods return the bots to be updated with new pairs.
         :return: bots_with_new_pairs
         """
         self.bots_with_new_pairs = []
@@ -61,7 +61,7 @@ class UpdateBots:
         except Exception as e:
             print("Bot information not received from database, error statement : "+ str(e))
         else:
-            print("Bots information loaded from database.")
+            print("Bots information received from database")
             print("*"*40)
         # Replacing pairs in Bot with New_pairs
         bots_to_be_updated = []
@@ -75,7 +75,7 @@ class UpdateBots:
         print(bots_to_be_updated)
         print("*"*40)
         if self.force == False:
-            conform = input("Are you sure to update above mentioned bots? (y/n)")
+            conform = input("Are you sure to update mentioned above bots? (y/n)")
         else:
             print("Forcefully updating bots...")
             conform = 'y'
@@ -110,7 +110,7 @@ class UpdateBots:
                 if update.status_code != requests.codes.ok:
                     print(update.text)
                 if error is None and update.status_code is requests.codes.ok :
-                    print(str(bot['name']) + " Bot and dataBase updated successfully.")
+                    print(str(bot['name']) + " Bot in the API and in the database was updated successfully.")
         else:
             print("Terminated!")
             exit()
