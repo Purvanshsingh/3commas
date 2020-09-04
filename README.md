@@ -2,6 +2,8 @@
 
 This is an Application to update 3commas Bots Automatically.
 
+[![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/) 
+
 ## Installation
 
 ```bash
@@ -31,4 +33,5 @@ python UpdateBots.py # Updates Bots with the mentioned new pairs in Bots_table.
 ```
 
 ## Developed by
-[Purvansh Singh (Python / ML Developer)](purvanshsingh@gmail.com)
+[Purvansh Singh (Python / ML Developer)](https://www.linkedin.com/in/purvansh-singh-2ba971147/)
+[![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)]()
