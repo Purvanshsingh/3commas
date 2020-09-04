@@ -6,7 +6,7 @@ import MongoConnection
 import requests
 
 
-class UpdateBot:
+class UpdateBots:
     def __init__(self):
         self.db_object = MongoConnection.App_mongo_connect()
         # API key & Secret Key
@@ -31,10 +31,10 @@ class UpdateBot:
         self.input_file = args['input_file']
         self.force = args['force']
         self.abs_path = os.path.dirname(os.path.abspath(__file__))
-        self.bot_table_path = os.path.join(self.abs_path, "Bot_tables")
-        self.file = os.path.join(self.bot_table_path,self.input_file)
+        self.bots_table_path = os.path.join(self.abs_path, "Bot_tables")
+        self.file = os.path.join(self.bots_table_path,self.input_file)
 
-    def bot_information(self):
+    def bots_information(self):
         """
             this methods return the bots to be updated with new pairs.
         :return: bots_with_new_pairs
@@ -42,17 +42,17 @@ class UpdateBot:
         self.bots_with_new_pairs = []
         # Checking Bot_table exist in Bot_tables folder
         if os.path.isfile(self.file):
-            self.bot_table = pd.read_csv(self.file)
-            print(self.bot_table.head())
+            self.bots_table = pd.read_csv(self.file)
+            print(self.bots_table.head())
             print("*"*40)
-            for bot in self.bot_table.index:
-                bot = self.bot_table.loc[bot]
+            for bot in self.bots_table.index:
+                bot = self.bots_table.loc[bot]
                 if not pd.isnull(bot['New_pairs']):
                     self.bots_with_new_pairs.append({"name" : bot['Bot_name'],
                                                     "id" :  bot['Bot_id'], "new_pairs" :  bot['New_pairs']})
         return self.bots_with_new_pairs
 
-    def update_bot(self):
+    def update_bots(self):
         bot_ids_with_new_pairs = []
         for bot in self.bots_with_new_pairs:
             bot_ids_with_new_pairs.append(bot['id'])
@@ -117,11 +117,11 @@ class UpdateBot:
 
 
 
-def update_bot():
-    Bot_obj = UpdateBot()
-    Bot_obj.bot_information()
-    Bot_obj.update_bot()
+def update_bots():
+    Bots_obj = UpdateBots()
+    Bots_obj.bots_information()
+    Bots_obj.update_bots()
 
 if __name__ == '__main__':
-    update_bot()
+    update_bots()
 
