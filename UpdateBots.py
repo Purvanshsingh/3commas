@@ -86,7 +86,7 @@ class UpdateBots:
                                    "take_profit_type", "strategy_list", "id","stop_loss_percentage", "cooldown",
                                    "max_active_deals"]
             for bot in self.bots_information_from_db:
-                # setting max_active_deals
+                # setting max_active_dealsy
                 bot["max_active_deals"] = len(bot["pairs"])
                 # only passing mandatory parameter.
                 for key in list(bot.keys()):
