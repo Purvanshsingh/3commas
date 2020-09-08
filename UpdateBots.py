@@ -77,21 +77,19 @@ class UpdateBots:
             for bot_with_new_arguments in self.bots_with_new_pairs:
                 if bot_db['id'] == bot_with_new_arguments['Bot_id']:
                     bot_db['pairs'] = bot_with_new_arguments['New_pairs'].split(",")
-                    bot_db["base_order_volume"] = bot_with_new_arguments["base_order_volume"]
-                    bot_db["take_profit"] = bot_with_new_arguments["take_profit"]
-                    bot_db["safety_order_volume"] = bot_with_new_arguments["safety_order_volume"]
-                    bot_db["martingale_volume_coefficient"] = bot_with_new_arguments["martingale_volume_coefficient"]
-                    bot_db["martingale_step_coefficient"] = bot_with_new_arguments["martingale_step_coefficient"]
-                    bot_db["max_safety_orders"] = bot_with_new_arguments["max_safety_orders"]
-                    bot_db["active_safety_orders_count"] = bot_with_new_arguments["active_safety_orders_count"]
-                    bot_db["safety_order_step_percentage"] = bot_with_new_arguments["safety_order_step_percentage"]
+                    bot_db["base_order_volume"] = float(bot_with_new_arguments["base_order_volume"])
+                    bot_db["take_profit"] = float(bot_with_new_arguments["take_profit"])
+                    bot_db["safety_order_volume"] = float(bot_with_new_arguments["safety_order_volume"])
+                    bot_db["martingale_volume_coefficient"] = float(bot_with_new_arguments["martingale_volume_coefficient"])
+                    bot_db["martingale_step_coefficient"] = float(bot_with_new_arguments["martingale_step_coefficient"])
+                    bot_db["max_safety_orders"] = float(bot_with_new_arguments["max_safety_orders"])
+                    bot_db["active_safety_orders_count"] = float(bot_with_new_arguments["active_safety_orders_count"])
+                    bot_db["safety_order_step_percentage"] = float(bot_with_new_arguments["safety_order_step_percentage"])
                     bot_db["take_profit_type"] = bot_with_new_arguments["take_profit_type"]
                     bot_db["strategy_list"] = bot_with_new_arguments["strategy_list"]
-                    bot_db["stop_loss_percentage"] = bot_with_new_arguments["stop_loss_percentage"]
-                    bot_db["cooldown"] = bot_with_new_arguments["cooldown"]
-                    bot_db["max_active_deals"] = bot_with_new_arguments["max_active_deals"]
-
-
+                    bot_db["stop_loss_percentage"] = float(bot_with_new_arguments["stop_loss_percentage"])
+                    bot_db["cooldown"] = float(bot_with_new_arguments["cooldown"])
+                    bot_db["max_active_deals"] = int(bot_with_new_arguments["max_active_deals"])
 
         print("Bots to be updated are:")
         print(bots_to_be_updated)
@@ -107,13 +105,13 @@ class UpdateBots:
                 bot["max_active_deals"] = len(bot["pairs"])
                 # only passing mandatory parameter.
 
-                for args in ['Bot_name', 'Bot_id', "New_pairs"]:
-                    self.mandatory_arguments.remove(args)
-                self.mandatory_arguments.append("id")
-                self.mandatory_arguments.append("name")
-                self.mandatory_arguments.append("pairs")
+                mandatory_arguments = ['name', 'id', 'pairs', "base_order_volume", "take_profit",
+                                       "safety_order_volume", "martingale_volume_coefficient",
+                                       "martingale_step_coefficient", "max_safety_orders", "active_safety_orders_count",
+                                       "safety_order_step_percentage", "take_profit_type", "strategy_list",
+                                       "stop_loss_percentage", "cooldown", "max_active_deals"]
                 for key in list(bot.keys()):
-                    if key not in self.mandatory_arguments:
+                    if key not in mandatory_arguments:
                         del bot[key]
 
                 # Updating DataBase
