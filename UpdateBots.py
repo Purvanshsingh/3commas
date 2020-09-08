@@ -86,7 +86,7 @@ class UpdateBots:
                     bot_db["active_safety_orders_count"] = float(bot_with_new_arguments["active_safety_orders_count"])
                     bot_db["safety_order_step_percentage"] = float(bot_with_new_arguments["safety_order_step_percentage"])
                     bot_db["take_profit_type"] = bot_with_new_arguments["take_profit_type"]
-                    bot_db["strategy_list"] = bot_with_new_arguments["strategy_list"]
+                    bot_db["strategy_list"] = eval(bot_with_new_arguments["strategy_list"])
                     bot_db["stop_loss_percentage"] = float(bot_with_new_arguments["stop_loss_percentage"])
                     bot_db["cooldown"] = float(bot_with_new_arguments["cooldown"])
                     bot_db["max_active_deals"] = int(bot_with_new_arguments["max_active_deals"])
