@@ -127,7 +127,7 @@ class UpdateBots:
                     print(error)
                 
                 # Updating DataBase
-                update = requests.post("http://127.0.0.1:5001/3commas/bots/"+str(bot["id"]),
+                update = requests.post("http://142.93.42.209:5001/3commas/bots/"+str(bot["id"]),
                                        {"pairs":bot['pairs']})
                                        
                 # Checking for errors in Updating DataBase
