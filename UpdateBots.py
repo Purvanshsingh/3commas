@@ -4,6 +4,7 @@ import os
 import pandas as pd
 import MongoConnection
 import requests
+import numpy as np
 
 
 class UpdateBots:
@@ -34,6 +35,12 @@ class UpdateBots:
         self.bots_table_path = os.path.join(self.abs_path, "Bot_tables")
         self.file = os.path.join(self.bots_table_path,self.input_file)
 
+        self.mandatory_arguments = ['Bot_name', 'Bot_id', "base_order_volume", "take_profit",
+                                    "safety_order_volume", "martingale_volume_coefficient",
+                                    "martingale_step_coefficient", "max_safety_orders", "active_safety_orders_count",
+                                    "safety_order_step_percentage", "take_profit_type", "strategy_list",
+                                    "stop_loss_percentage", "cooldown","max_active_deals",'New_pairs']
+
     def bots_information(self):
         """
             This methods return the bots to be updated with new pairs.
@@ -48,14 +55,14 @@ class UpdateBots:
             for bot in self.bots_table.index:
                 bot = self.bots_table.loc[bot]
                 if not pd.isnull(bot['New_pairs']):
-                    self.bots_with_new_pairs.append({"name" : bot['Bot_name'],
-                                                    "id" :  bot['Bot_id'], "new_pairs" :  bot['New_pairs']})
+                    updated_arguments = {key: bot[key] for(key) in self.mandatory_arguments}
+                    self.bots_with_new_pairs.append(updated_arguments)
         return self.bots_with_new_pairs
 
     def update_bots(self):
         bot_ids_with_new_pairs = []
         for bot in self.bots_with_new_pairs:
-            bot_ids_with_new_pairs.append(bot['id'])
+            bot_ids_with_new_pairs.append(bot['Bot_id'])
         try:
             self.bots_information_from_db = self.db_object.get_bot_data(bot_ids_with_new_pairs)
         except Exception as e:
@@ -67,9 +74,24 @@ class UpdateBots:
         bots_to_be_updated = []
         for bot_db in self.bots_information_from_db:
             bots_to_be_updated.append(bot_db['name'])
-            for bot_new_pairs in self.bots_with_new_pairs:
-                if bot_db['id'] == bot_new_pairs['id']:
-                    bot_db['pairs'] = bot_new_pairs['new_pairs'].split(",")
+            for bot_with_new_arguments in self.bots_with_new_pairs:
+                if bot_db['id'] == bot_with_new_arguments['Bot_id']:
+                    bot_db['pairs'] = bot_with_new_arguments['New_pairs'].split(",")
+                    bot_db["base_order_volume"] = bot_with_new_arguments["base_order_volume"]
+                    bot_db["take_profit"] = bot_with_new_arguments["take_profit"]
+                    bot_db["safety_order_volume"] = bot_with_new_arguments["safety_order_volume"]
+                    bot_db["martingale_volume_coefficient"] = bot_with_new_arguments["martingale_volume_coefficient"]
+                    bot_db["martingale_step_coefficient"] = bot_with_new_arguments["martingale_step_coefficient"]
+                    bot_db["max_safety_orders"] = bot_with_new_arguments["max_safety_orders"]
+                    bot_db["active_safety_orders_count"] = bot_with_new_arguments["active_safety_orders_count"]
+                    bot_db["safety_order_step_percentage"] = bot_with_new_arguments["safety_order_step_percentage"]
+                    bot_db["take_profit_type"] = bot_with_new_arguments["take_profit_type"]
+                    bot_db["strategy_list"] = bot_with_new_arguments["strategy_list"]
+                    bot_db["stop_loss_percentage"] = bot_with_new_arguments["stop_loss_percentage"]
+                    bot_db["cooldown"] = bot_with_new_arguments["cooldown"]
+                    bot_db["max_active_deals"] = bot_with_new_arguments["max_active_deals"]
+
+
 
         print("Bots to be updated are:")
         print(bots_to_be_updated)
@@ -80,22 +102,20 @@ class UpdateBots:
             print("Forcefully updating bots...")
             conform = 'y'
         if conform == 'y' or conform == "Y":
-            mandatory_arguments = ["name", "pairs", "base_order_volume", "take_profit", "safety_order_volume",
-                                   "take_profit", "martingale_volume_coefficient", "martingale_step_coefficient",
-                                   "max_safety_orders", "active_safety_orders_count", "safety_order_step_percentage",
-                                   "take_profit_type", "strategy_list", "id","stop_loss_percentage", "cooldown",
-                                   "max_active_deals"]
             for bot in self.bots_information_from_db:
                 # setting max_active_dealsy
                 bot["max_active_deals"] = len(bot["pairs"])
                 # only passing mandatory parameter.
+
+                for args in ['Bot_name', 'Bot_id', "New_pairs"]:
+                    self.mandatory_arguments.remove(args)
+                self.mandatory_arguments.append("id")
+                self.mandatory_arguments.append("name")
+                self.mandatory_arguments.append("pairs")
                 for key in list(bot.keys()):
-                    if key not in mandatory_arguments:
+                    if key not in self.mandatory_arguments:
                         del bot[key]
-                # If any argument from mandatory_arguments is None then dropping them.
-                for key in mandatory_arguments:
-                    if bot[key] is None:
-                        del bot[key]
+
                 # Updating DataBase
                 update = requests.post("http://142.93.42.209:5001/3commas/bots/"+str(bot["id"]),
                                        {"pairs":bot['pairs']})
