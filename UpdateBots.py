@@ -114,9 +114,7 @@ class UpdateBots:
                     if key not in mandatory_arguments:
                         del bot[key]
 
-                # Updating DataBase
-                update = requests.post("http://142.93.42.209:5001/3commas/bots/"+str(bot["id"]),
-                                       {"pairs":bot['pairs']})
+
                 # Updating bot
                 error, data = self.py3cw.request(
                     entity='bots',
@@ -127,6 +125,11 @@ class UpdateBots:
                 # Checking for errors in Updating Bot
                 if error:
                     print(error)
+                
+                # Updating DataBase
+                update = requests.post("http://127.0.0.1:5001/3commas/bots/"+str(bot["id"]),
+                                       {"pairs":bot['pairs']})
+                                       
                 # Checking for errors in Updating DataBase
                 if update.status_code != requests.codes.ok:
                     print(update.text)
