@@ -23,11 +23,11 @@ class Bots_table:
         for document in self.bots_table_data:
             row = pd.Series([document['name'], document['id'], ",".join(document['pairs']),
                              document["base_order_volume"], document["take_profit"],document["safety_order_volume"],
-                             document["take_profit"], document["martingale_volume_coefficient"],
-                             document["martingale_step_coefficient"], document["max_safety_orders"],
-                             document["active_safety_orders_count"],document["safety_order_step_percentage"],
-                             document["take_profit_type"], document["strategy_list"],document["stop_loss_percentage"],
-                             document["cooldown"], document["max_active_deals"]], index=self.mandatory_columns)
+                             document["martingale_volume_coefficient"], document["martingale_step_coefficient"],
+                             document["max_safety_orders"],document["active_safety_orders_count"],
+                             document["safety_order_step_percentage"],document["take_profit_type"],
+                             document["strategy_list"],document["stop_loss_percentage"],document["cooldown"],
+                             document["max_active_deals"]], index=self.mandatory_columns)
             output = output.append(row, ignore_index=True)
         output['New_pairs'] = None
         print(output.head())
