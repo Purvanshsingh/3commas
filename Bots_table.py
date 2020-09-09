@@ -9,7 +9,7 @@ class Bots_table:
         self.bots_table_data = db_object.get_update_table()
         self.abs_path = os.path.dirname(os.path.abspath(__file__))
         self.bots_table_path = os.path.join(self.abs_path,"Bot_tables")
-        self.mandatory_columns = ['Bot_name', 'Bot_id', "Current_pairs", "base_order_volume", "take_profit",
+        self.mandatory_columns = ['Bot_name', 'Bot_id',"is_enabled", "Current_pairs", "base_order_volume", "take_profit",
                                        "safety_order_volume", "martingale_volume_coefficient",
                                        "martingale_step_coefficient","max_safety_orders", "active_safety_orders_count",
                                        "safety_order_step_percentage","take_profit_type", "strategy_list",
@@ -21,7 +21,7 @@ class Bots_table:
         output = pd.DataFrame(columns=self.mandatory_columns)
 
         for document in self.bots_table_data:
-            row = pd.Series([document['name'], document['id'], ",".join(document['pairs']),
+            row = pd.Series([document['name'], document['id'], document["is_enabled"], ",".join(document['pairs']),
                              document["base_order_volume"], document["take_profit"],document["safety_order_volume"],
                              document["martingale_volume_coefficient"], document["martingale_step_coefficient"],
                              document["max_safety_orders"],document["active_safety_orders_count"],
