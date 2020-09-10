@@ -39,7 +39,8 @@ class UpdateBots:
                                     "safety_order_volume", "martingale_volume_coefficient",
                                     "martingale_step_coefficient", "max_safety_orders", "active_safety_orders_count",
                                     "safety_order_step_percentage", "take_profit_type", "strategy_list",
-                                    "stop_loss_percentage", "cooldown","max_active_deals",'New_pairs']
+                                    "stop_loss_percentage", "cooldown", "trailing_enabled", "trailing_deviation",
+                                    'New_pairs']
 
     def bots_information(self):
         """
@@ -89,7 +90,9 @@ class UpdateBots:
                     bot_db["strategy_list"] = eval(bot_with_new_arguments["strategy_list"])
                     bot_db["stop_loss_percentage"] = float(bot_with_new_arguments["stop_loss_percentage"])
                     bot_db["cooldown"] = float(bot_with_new_arguments["cooldown"])
-                    bot_db["max_active_deals"] = int(bot_with_new_arguments["max_active_deals"])
+                    bot_db["trailing_enabled"] = bot_with_new_arguments["trailing_enabled"]
+                    bot_db["trailing_deviation"] = float(bot_with_new_arguments["trailing_deviation"])
+
 
         print("Bots to be updated are:")
         print(bots_to_be_updated)
@@ -101,7 +104,7 @@ class UpdateBots:
             conform = 'y'
         if conform == 'y' or conform == "Y":
             for bot in self.bots_information_from_db:
-                # setting max_active_dealsy
+                # setting max_active_deals
                 bot["max_active_deals"] = len(bot["pairs"])
                 # only passing mandatory parameter.
 
@@ -109,7 +112,8 @@ class UpdateBots:
                                        "safety_order_volume", "martingale_volume_coefficient",
                                        "martingale_step_coefficient", "max_safety_orders", "active_safety_orders_count",
                                        "safety_order_step_percentage", "take_profit_type", "strategy_list",
-                                       "stop_loss_percentage", "cooldown", "max_active_deals"]
+                                       "stop_loss_percentage", "cooldown", "max_active_deals", "trailing_enabled",
+                                       "trailing_deviation"]
                 for key in list(bot.keys()):
                     if key not in mandatory_arguments:
                         del bot[key]
