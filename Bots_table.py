@@ -13,7 +13,7 @@ class Bots_table:
                                        "safety_order_volume", "martingale_volume_coefficient",
                                        "martingale_step_coefficient","max_safety_orders", "active_safety_orders_count",
                                        "safety_order_step_percentage","take_profit_type", "strategy_list",
-                                       "stop_loss_percentage", "cooldown", "max_active_deals"]
+                                       "stop_loss_percentage", "cooldown", "trailing_enabled", "trailing_deviation"]
         print("*" * 40)
 
     def generate_bots_table(self):
@@ -27,7 +27,7 @@ class Bots_table:
                              document["max_safety_orders"],document["active_safety_orders_count"],
                              document["safety_order_step_percentage"],document["take_profit_type"],
                              document["strategy_list"],document["stop_loss_percentage"],document["cooldown"],
-                             document["max_active_deals"]], index=self.mandatory_columns)
+                             document["trailing_enabled"], document["trailing_deviation"]],index=self.mandatory_columns)
             output = output.append(row, ignore_index=True)
         output['New_pairs'] = None
         print(output.head())
