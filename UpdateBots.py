@@ -86,7 +86,7 @@ class UpdateBots:
                     bot_db["max_safety_orders"] = float(bot_with_new_arguments["max_safety_orders"])
                     bot_db["active_safety_orders_count"] = float(bot_with_new_arguments["active_safety_orders_count"])
                     bot_db["safety_order_step_percentage"] = float(bot_with_new_arguments["safety_order_step_percentage"])
-                    bot_db["take_profit_type"] = bot_with_new_arguments["take_profit_type"]
+                    bot_db["take_profit_type"] = str(bot_with_new_arguments["take_profit_type"])
                     bot_db["strategy_list"] = eval(bot_with_new_arguments["strategy_list"])
                     bot_db["stop_loss_percentage"] = float(bot_with_new_arguments["stop_loss_percentage"])
                     bot_db["cooldown"] = float(bot_with_new_arguments["cooldown"])
@@ -94,7 +94,7 @@ class UpdateBots:
                     if np.isnan(bot_with_new_arguments["trailing_enabled"]):
                         bot_db["trailing_enabled"] = False
                     else:
-                        bot_db["trailing_enabled"] = bot_with_new_arguments["trailing_enabled"]
+                        bot_db["trailing_enabled"] = bool(bot_with_new_arguments["trailing_enabled"])
                     # Checking for empty values for trailing_deviation
                     if np.isnan(bot_with_new_arguments["trailing_deviation"]):
                         bot_db["trailing_deviation"] = float(0.0)
